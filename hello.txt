@@ -1,2 +1,4 @@
-hi
-hello
+# initial addition of database
+1,aa,8.2,5
+560,39
+450,58
