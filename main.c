@@ -33,7 +33,20 @@ int main(int argc,char *argv[]){
         //check whether he is nique or not 
         // create a course linked list for his name under roll no
         printf("hello chintu this is name");
+         
+       
+       
+         
         
+         
+
+
+
+
+
+
+
+
       }
       else{
         //course code and marks 
