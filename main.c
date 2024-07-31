@@ -2,6 +2,34 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+typedef struct student
+{
+  // one is represnting node 
+  // name 
+  //cgpa
+  //number of subjects
+};
+
+
+
+// double linkedlist here 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int main(int argc, char *argv[])
 {
   char *input_filename = argv[1];
@@ -9,32 +37,37 @@ int main(int argc, char *argv[])
   FILE *file = fopen(input_filename, "r");
   char line[256];
   int commas = 0;
+  char str[50];
   while (fgets(line, sizeof(line), file))
   {
+
     line[strcspn(line, "\n")] = 0;
     printf("%s\n", line);
 
-    if (strcmp(line, "# add students/n") == 0)
+    if (strcmp(str, "# add students/n") == 0)
     {
+      printf("in add students\n");
     }
     else if (strcmp(line, "# initial addition of database") == 0)
     {
+
       fgets(line, sizeof(line), file);
-      while (1)
+       line[strcspn(line, "\n")] = 0;
+
+      while(1)
       {
-        commas=0;
+        commas = 0;
         // check no of commas
         // accordingly select the student name row or course and mark row
 
-        for (int i = 0; i < sizeof(line) / sizeof(char); i++)
+        for (int i = 0; i < strlen(line); i++)
         {
           if (line[i] == ',')
           {
             commas++;
-           
           }
         }
-         printf("%d\n",commas);
+        printf("%d\n", commas);
         if (commas > 1)
         {
 
@@ -43,43 +76,56 @@ int main(int argc, char *argv[])
           // 1) i need to add this guy in linked list and
           // check whether he is nique or not
           // create a course linked list for his name under roll no
-          printf("hello chintu this is name\n");
+          
+
+          // accessing student name and roll no cgpa courseNo
+          int comm = 0;
+
           commas = 0;
         }
-        else if(commas == 1)
+        else if (commas == 1)
         {
           // course code and marks
           //  add the course in the linekd list and check whether it is unique or not
-          printf("hello mani this course part");
+          
           commas = 0;
         }
-        
+
         fgets(line, sizeof(line), file);
         line[strcspn(line, "\n")] = 0;
 
         if (line[0] == '#')
         {
+          printf("is this coming\n");
+          printf("%s",line);
+         
+          strcpy(str,line);
+           printf("%s",str);
           break;
         }
       }
     }
-    else if (strcmp(line, "# add course"))
+    else if (strcmp(str, "# add course"))
     {
-      // printf("%s","Add the course");
+
+      printf("%s", "Add the course guys ");
       //  printf("tony");
     }
-    else if (strcmp(line, "# modify student"))
+    else if (strcmp(str, "# modify student"))
     {
-      // printf("%s","Add the course");
+      printf("%s", "Add the course");
     }
-    else if (strcmp(line, "# modify course"))
+    else if (strcmp(str, "# modify course"))
     {
+      printf("%s", "modify course");
     }
-    else if (strcmp(line, "# delete student"))
+    else if (strcmp(str, "# delete student"))
     {
+      printf("%s", "delete student");
     }
-    else if (strcmp(line, "# delete course"))
+    else if (strcmp(str, "# delete course"))
     {
+      printf("%s", "delete course");
     }
   }
 
