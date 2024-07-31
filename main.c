@@ -2,18 +2,156 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+
+
 
 typedef struct student
 {
-  // one is represnting node 
-  // name 
-  //cgpa
-  //number of subjects
-};
+    int id;
+    char name[50];
+    float gpa;
+    int num_subjects;
+    int (*course_marks)[2];
+} Student;
+
+// Define the node of the doubly linked list
+typedef struct node
+{
+    Student data;
+    struct node *prev;
+    struct node *next;
+} Node;
+
+// Function to create a new node
+Node *createNode(int id, char *name, float gpa, int num_subjects, int (*course_marks)[2])
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data.id = id;
+    strcpy(newNode->data.name, name);
+    newNode->data.gpa = gpa;
+    newNode->data.num_subjects = num_subjects;
+    newNode->data.course_marks = course_marks;
+    newNode->prev = NULL;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to insert a node at the end of the list
+void insertAtEnd(Node **head, int id, char *name, float gpa, int num_subjects, int (*course_marks)[2])
+{
+    // Check if the ID already exists
+    Node *temp = *head;
+    while (temp != NULL)
+    {
+        if (temp->data.id == id)
+        {
+            printf("Error: Student ID %d already exists.\n", id);
+            free(course_marks); // Free the allocated memory for course_marks
+            return;
+        }
+        temp = temp->next;
+    }
+
+    // If ID does not exist, create a new node
+    Node *newNode = createNode(id, name, gpa, num_subjects, course_marks);
+    if (*head == NULL)
+    {
+        *head = newNode;
+    }
+    else
+    {
+        temp = *head;
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+        newNode->prev = temp;
+    }
+}
+
+// Function to delete a node by id
+void deleteNode(Node **head, int id)
+{
+    if (*head == NULL)
+    {
+        return;
+    }
+    Node *temp = *head;
+    while (temp != NULL && temp->data.id != id)
+    {
+        temp = temp->next;
+    }
+    if (temp == NULL)
+    {
+        printf("Student with ID %d not found.\n", id);
+        return;
+    }
+    if (temp->prev != NULL)
+    {
+        temp->prev->next = temp->next;
+    }
+    else
+    {
+        *head = temp->next;
+    }
+    if (temp->next != NULL)
+    {
+        temp->next->prev = temp->prev;
+    }
+    free(temp->data.course_marks); // Free dynamically allocated memory
+    free(temp);
+}
+
+// Function to display the list
+void displayList(Node *head)
+{
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        printf("ID: %d, Name: %s, GPA: %.2f, Subjects: %d\n", temp->data.id, temp->data.name, temp->data.gpa, temp->data.num_subjects);
+        for (int i = 0; i < temp->data.num_subjects; i++)
+        {
+            printf("  Subject ID: %d, Marks: %d\n", temp->data.course_marks[i][0], temp->data.course_marks[i][1]);
+        }
+        temp = temp->next;
+    }
+}
 
 
 
-// double linkedlist here 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -32,12 +170,17 @@ typedef struct student
 
 int main(int argc, char *argv[])
 {
+      Node *head = NULL;
+
   char *input_filename = argv[1];
   printf("%s\n", input_filename);
   FILE *file = fopen(input_filename, "r");
   char line[256];
   int commas = 0;
   char str[50];
+    int roll_no, course_no;
+    char name[50];
+    float cgpa;
   while (fgets(line, sizeof(line), file))
   {
 
@@ -52,9 +195,9 @@ int main(int argc, char *argv[])
     {
 
       fgets(line, sizeof(line), file);
-       line[strcspn(line, "\n")] = 0;
+      line[strcspn(line, "\n")] = 0;
 
-      while(1)
+      while (1)
       {
         commas = 0;
         // check no of commas
@@ -71,12 +214,32 @@ int main(int argc, char *argv[])
         if (commas > 1)
         {
 
-          // printf("%s",line);
+          printf("%s\n",line);
+              sscanf(line, "%d, %49[^,], %f, %d", &roll_no, name, &cgpa, &course_no);
+            printf("Roll No: %d\n", roll_no);
+    printf("Name: %s\n", name);
+    printf("CGPA: %.2f\n", cgpa);
+    printf("Course No: %d\n", course_no);
           // stduent name data base row
           // 1) i need to add this guy in linked list and
           // check whether he is nique or not
           // create a course linked list for his name under roll no
+        
           
+                    int(*course_marks)[2] = malloc(course_no * sizeof(int[2]));
+                    for(int i=0;i<course_no;i++){
+                      for(int j=0;j<2;j++){
+                        course_marks[i][j]=0;
+                      }
+                    }
+
+
+                  insertAtEnd(&head, roll_no, name, cgpa, course_no, course_marks);
+
+
+        // accordint o the commas i need to store the name,cgpa etc and store it into the 
+        //linkedlist
+       
 
           // accessing student name and roll no cgpa courseNo
           int comm = 0;
@@ -85,9 +248,14 @@ int main(int argc, char *argv[])
         }
         else if (commas == 1)
         {
+              int course_code, marks;
+
           // course code and marks
           //  add the course in the linekd list and check whether it is unique or not
-          
+             sscanf(line, "%d, %d", &course_code, &marks);
+                printf("Course Code: %d\n", course_code);
+    printf("Marks: %d\n", marks);
+
           commas = 0;
         }
 
@@ -96,11 +264,12 @@ int main(int argc, char *argv[])
 
         if (line[0] == '#')
         {
+          displayList(head);
           printf("is this coming\n");
-          printf("%s",line);
-         
-          strcpy(str,line);
-           printf("%s",str);
+          printf("%s", line);
+
+          strcpy(str, line);
+          printf("%s", str);
           break;
         }
       }
