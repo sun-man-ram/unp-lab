@@ -6,171 +6,136 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-
-
-
 typedef struct student
 {
-    int id;
-    char name[50];
-    float gpa;
-    int num_subjects;
-    int (*course_marks)[2];
+  int id;
+  char name[50];
+  float gpa;
+  int num_subjects;
+  int (*course_marks)[2];
 } Student;
 
 // Define the node of the doubly linked list
 typedef struct node
 {
-    Student data;
-    struct node *prev;
-    struct node *next;
+  Student data;
+  struct node *prev;
+  struct node *next;
 } Node;
 
 // Function to create a new node
 Node *createNode(int id, char *name, float gpa, int num_subjects, int (*course_marks)[2])
 {
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->data.id = id;
-    strcpy(newNode->data.name, name);
-    newNode->data.gpa = gpa;
-    newNode->data.num_subjects = num_subjects;
-    newNode->data.course_marks = course_marks;
-    newNode->prev = NULL;
-    newNode->next = NULL;
-    return newNode;
+  Node *newNode = (Node *)malloc(sizeof(Node));
+  newNode->data.id = id;
+  strcpy(newNode->data.name, name);
+  newNode->data.gpa = gpa;
+  newNode->data.num_subjects = num_subjects;
+  newNode->data.course_marks = course_marks;
+  newNode->prev = NULL;
+  newNode->next = NULL;
+  return newNode;
 }
 
 // Function to insert a node at the end of the list
 void insertAtEnd(Node **head, int id, char *name, float gpa, int num_subjects, int (*course_marks)[2])
 {
-    // Check if the ID already exists
-    Node *temp = *head;
-    while (temp != NULL)
+  // Check if the ID already exists
+  Node *temp = *head;
+  while (temp != NULL)
+  {
+    if (temp->data.id == id)
     {
-        if (temp->data.id == id)
-        {
-            printf("Error: Student ID %d already exists.\n", id);
-            free(course_marks); // Free the allocated memory for course_marks
-            return;
-        }
-        temp = temp->next;
+      printf("Error: Student ID %d already exists.\n", id);
+      free(course_marks); // Free the allocated memory for course_marks
+      return;
     }
+    temp = temp->next;
+  }
 
-    // If ID does not exist, create a new node
-    Node *newNode = createNode(id, name, gpa, num_subjects, course_marks);
-    if (*head == NULL)
+  // If ID does not exist, create a new node
+  Node *newNode = createNode(id, name, gpa, num_subjects, course_marks);
+  if (*head == NULL)
+  {
+    *head = newNode;
+  }
+  else
+  {
+    temp = *head;
+    while (temp->next != NULL)
     {
-        *head = newNode;
+      temp = temp->next;
     }
-    else
-    {
-        temp = *head;
-        while (temp->next != NULL)
-        {
-            temp = temp->next;
-        }
-        temp->next = newNode;
-        newNode->prev = temp;
-    }
+    temp->next = newNode;
+    newNode->prev = temp;
+  }
 }
 
+Node* getNodeAt(Node* head, int x) {
+    Node* temp = head;
+    int count = 0;
+    while (temp != NULL && count < x) {
+        temp = temp->next;
+        count++;
+    }
+    if (count == x) {
+        return temp;
+    } else {
+        return NULL; // x is out of bounds
+}
+}
 // Function to delete a node by id
 void deleteNode(Node **head, int id)
 {
-    if (*head == NULL)
-    {
-        return;
-    }
-    Node *temp = *head;
-    while (temp != NULL && temp->data.id != id)
-    {
-        temp = temp->next;
-    }
-    if (temp == NULL)
-    {
-        printf("Student with ID %d not found.\n", id);
-        return;
-    }
-    if (temp->prev != NULL)
-    {
-        temp->prev->next = temp->next;
-    }
-    else
-    {
-        *head = temp->next;
-    }
-    if (temp->next != NULL)
-    {
-        temp->next->prev = temp->prev;
-    }
-    free(temp->data.course_marks); // Free dynamically allocated memory
-    free(temp);
+  if (*head == NULL)
+  {
+    return;
+  }
+  Node *temp = *head;
+  while (temp != NULL && temp->data.id != id)
+  {
+    temp = temp->next;
+  }
+  if (temp == NULL)
+  {
+    printf("Student with ID %d not found.\n", id);
+    return;
+  }
+  if (temp->prev != NULL)
+  {
+    temp->prev->next = temp->next;
+  }
+  else
+  {
+    *head = temp->next;
+  }
+  if (temp->next != NULL)
+  {
+    temp->next->prev = temp->prev;
+  }
+  free(temp->data.course_marks); // Free dynamically allocated memory
+  free(temp);
 }
 
 // Function to display the list
 void displayList(Node *head)
 {
-    Node *temp = head;
-    while (temp != NULL)
+  Node *temp = head;
+  while (temp != NULL)
+  {
+    printf("ID: %d, Name: %s, GPA: %.2f, Subjects: %d\n", temp->data.id, temp->data.name, temp->data.gpa, temp->data.num_subjects);
+    for (int i = 0; i < temp->data.num_subjects; i++)
     {
-        printf("ID: %d, Name: %s, GPA: %.2f, Subjects: %d\n", temp->data.id, temp->data.name, temp->data.gpa, temp->data.num_subjects);
-        for (int i = 0; i < temp->data.num_subjects; i++)
-        {
-            printf("  Subject ID: %d, Marks: %d\n", temp->data.course_marks[i][0], temp->data.course_marks[i][1]);
-        }
-        temp = temp->next;
+      printf("  Subject ID: %d, Marks: %d\n", temp->data.course_marks[i][0], temp->data.course_marks[i][1]);
     }
+    temp = temp->next;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 int main(int argc, char *argv[])
 {
-      Node *head = NULL;
+  int student_no=-1;
+  Node *head = NULL;
 
   char *input_filename = argv[1];
   printf("%s\n", input_filename);
@@ -178,9 +143,10 @@ int main(int argc, char *argv[])
   char line[256];
   int commas = 0;
   char str[50];
-    int roll_no, course_no;
-    char name[50];
-    float cgpa;
+  int roll_no, course_no;
+  char name[50];
+  float cgpa;
+  int row=0;
   while (fgets(line, sizeof(line), file))
   {
 
@@ -213,33 +179,32 @@ int main(int argc, char *argv[])
         printf("%d\n", commas);
         if (commas > 1)
         {
-
-          printf("%s\n",line);
-              sscanf(line, "%d, %49[^,], %f, %d", &roll_no, name, &cgpa, &course_no);
-            printf("Roll No: %d\n", roll_no);
-    printf("Name: %s\n", name);
-    printf("CGPA: %.2f\n", cgpa);
-    printf("Course No: %d\n", course_no);
+         row=0;
+        student_no++;
+          printf("%s\n", line);
+          sscanf(line, "%d, %49[^,], %f, %d", &roll_no, name, &cgpa, &course_no);
+          printf("Roll No: %d\n", roll_no);
+          printf("Name: %s\n", name);
+          printf("CGPA: %.2f\n", cgpa);
+          printf("Course No: %d\n", course_no);
           // stduent name data base row
           // 1) i need to add this guy in linked list and
           // check whether he is nique or not
           // create a course linked list for his name under roll no
-        
-          
-                    int(*course_marks)[2] = malloc(course_no * sizeof(int[2]));
-                    for(int i=0;i<course_no;i++){
-                      for(int j=0;j<2;j++){
-                        course_marks[i][j]=0;
-                      }
-                    }
 
+          int(*course_marks)[2] = malloc(course_no * sizeof(int[2]));
+          for (int i = 0; i < course_no; i++)
+          {
+            for (int j = 0; j < 2; j++)
+            {
+              course_marks[i][j] = 0;
+            }
+          }
 
-                  insertAtEnd(&head, roll_no, name, cgpa, course_no, course_marks);
+          insertAtEnd(&head, roll_no, name, cgpa, course_no, course_marks);
 
-
-        // accordint o the commas i need to store the name,cgpa etc and store it into the 
-        //linkedlist
-       
+          // accordint o the commas i need to store the name,cgpa etc and store it into the
+          // linkedlist
 
           // accessing student name and roll no cgpa courseNo
           int comm = 0;
@@ -248,14 +213,21 @@ int main(int argc, char *argv[])
         }
         else if (commas == 1)
         {
-              int course_code, marks;
+          int course_code, marks;
 
-          // course code and marks
-          //  add the course in the linekd list and check whether it is unique or not
-             sscanf(line, "%d, %d", &course_code, &marks);
-                printf("Course Code: %d\n", course_code);
-    printf("Marks: %d\n", marks);
-
+          sscanf(line, "%d, %d", &course_code, &marks);
+          printf("Course Code: %d\n", course_code);
+          printf("Marks: %d\n", marks);
+          // tranverse to that particular node 
+          Node* nodeAtIndex = getNodeAt(head,student_no);
+          printf("chintu");
+          printf("Node at index %d: %s\n",student_no, nodeAtIndex->data.name);
+          // then we need to save it          
+         printf("%d\n",nodeAtIndex->data.num_subjects);
+         
+        nodeAtIndex->data.course_marks[row][0]=course_code;
+        nodeAtIndex->data.course_marks[row][1]=marks;
+row++;
           commas = 0;
         }
 
@@ -300,6 +272,6 @@ int main(int argc, char *argv[])
 
   // we are reading the file that mam gave
   // process the data
-
+displayList(head);
   return 0;
 }
