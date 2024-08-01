@@ -26,7 +26,9 @@
 4, 520, 81
 5, 560, 70
 5, 560, 72
-# delete course
-1, 520
 # modify course
 5, 560, 76
+4, 520, 80
+8, 520, 80
+# delete course
+1, 520
