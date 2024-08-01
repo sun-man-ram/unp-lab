@@ -237,6 +237,57 @@ void modifyCourse(Node *head, int id, int course_id, int new_marks)
   printf("Student with ID %d not found.\n", id);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+// Function to delete a specific course for a student
+void deleteCourse(Node *head, int id, int course_id) {
+    Node *temp = head;
+    while (temp != NULL) {
+        if (temp->data.id == id) {
+            // Check if the course exists
+            for (int i = 0; i < temp->data.num_subjects; i++) {
+                if (temp->data.course_marks[i][0] == course_id) {
+                    // Shift the courses to fill the gap
+                    for (int j = i; j < temp->data.num_subjects - 1; j++) {
+                        temp->data.course_marks[j][0] = temp->data.course_marks[j + 1][0];
+                        temp->data.course_marks[j][1] = temp->data.course_marks[j + 1][1];
+                    }
+                    // Reduce the number of subjects
+                    temp->data.num_subjects--;
+                    printf("Course ID %d deleted for student ID %d.\n", course_id, id);
+                    return;
+                }
+            }
+            printf("Course ID %d not found for student ID %d.\n", course_id, id);
+            return;
+        }
+        temp = temp->next;
+    }
+    printf("Student with ID %d not found.\n",id);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int main(int argc, char *argv[])
 {
   int student_no = -1;
@@ -505,7 +556,44 @@ int main(int argc, char *argv[])
     }
     else if (strcmp(str, "# delete course") == 0)
     {
-      printf("%s", "delete course");
+      
+     while(1){
+
+
+          int course_id;
+        //  int new_marks
+         int id;
+                sscanf(line, "%d, %d", &id, &course_id);
+
+       deleteCourse(head,id,course_id);
+
+
+
+       char *t;
+        t=fgets(line, sizeof(line), file);
+        line[strcspn(line, "\n")] = 0;
+
+        if (line[0] == '#')
+        {
+          printf("%s", line);
+          displayList(head);
+          // printf("is this coming\n");
+          // printf("%s", line);
+
+          strcpy(str, line);
+          // printf("%s", str);
+          break;
+        }
+        if(feof(file))
+        {
+          displayList(head);
+        }
+
+
+
+     }
+
+
     }
   }
 
