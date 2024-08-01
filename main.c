@@ -183,6 +183,43 @@ void displayList(Node *head)
   }
 }
 
+// Function to add a course for a student
+void addCourse(Node *head, int id, int course_id, int marks)
+{
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        if (temp->data.id == id)
+        {
+            // Check if the course already exists
+            for (int i = 0; i < temp->data.num_subjects; i++)
+            {
+                if (temp->data.course_marks[i][0] == course_id)
+                {
+                    printf("Course ID %d already exists for student ID %d.\n", course_id, id);
+                    return;
+                }
+            }
+            // Add the new course
+            int(*new_course_marks)[2] = realloc(temp->data.course_marks, (temp->data.num_subjects + 1) * sizeof(int[2]));
+            if (new_course_marks == NULL)
+            {
+                printf("Memory allocation failed.\n");
+                return;
+            }
+            temp->data.course_marks = new_course_marks;
+            temp->data.course_marks[temp->data.num_subjects][0] = course_id;
+            temp->data.course_marks[temp->data.num_subjects][1] = marks;
+            temp->data.num_subjects++;
+            printf("Course added successfully for student ID %d.\n", id);
+            return;
+        }
+        temp = temp->next;
+    }
+    printf("Student with ID %d not found.\n",id);
+}
+
+
 int main(int argc, char *argv[])
 {
   int student_no=-1;
@@ -347,10 +384,17 @@ row++;
     
     else if (strcmp(str, "# add course")==0)
     {
+      int course_id;
+      int marks;
+    while(1){
 
-     
+ 
+         sscanf(line, "%d, %d, %d", &roll_no, &course_id, &marks);
+                addCourse(head, roll_no, course_id, marks);
 
-              fgets(line, sizeof(line), file);
+
+
+             fgets(line, sizeof(line), file);
         line[strcspn(line, "\n")] = 0;
 
         if (line[0] == '#')
@@ -364,6 +408,8 @@ row++;
           // printf("%s", str);
           break;
         }
+
+    }
 
 
 
