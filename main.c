@@ -323,8 +323,25 @@ row++;
     else if (strcmp(str, "# add course")==0)
     {
 
-      // printf("%s", "Add the course guys ");
-      //  printf("tony");
+     
+
+              fgets(line, sizeof(line), file);
+        line[strcspn(line, "\n")] = 0;
+
+        if (line[0] == '#')
+        {
+          displayList(head);
+          // printf("is this coming\n");
+          // printf("%s", line);
+
+          strcpy(str, line);
+          printf("%s\n",str);
+          // printf("%s", str);
+          break;
+        }
+
+
+
     }
     else if (strcmp(str, "# modify student")==0)
     {
