@@ -22,10 +22,10 @@
 # modify student
 1, 8.1
 4, 6.1
+# delete course
+1, 520
 # add course
 4, 520, 81
 5, 560, 70
 # modify course
 5, 560, 76
-# delete course
-1, 520

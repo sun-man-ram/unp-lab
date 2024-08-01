@@ -126,6 +126,31 @@ void deleteNode(Node** head, int id) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void modifyCGPA(Node* head, int id, float new_cgpa) {
     Node* temp = head;
 
