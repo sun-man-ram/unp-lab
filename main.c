@@ -570,10 +570,10 @@ int main(int argc, char *argv[])
 
 
        char *t;
-        t=fgets(line, sizeof(line), file);
+      fgets(line, sizeof(line), file);
         line[strcspn(line, "\n")] = 0;
 
-        if (line[0] == '#')
+        if (line[0] == '#'||feof(file))
         {
           printf("%s", line);
           displayList(head);
