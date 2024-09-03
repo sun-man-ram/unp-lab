@@ -4,6 +4,7 @@
 450, 58
 620, 76
 470, 49
+520, 78
 2, ab, 6.7, 3
 560, 45
 450, 50
@@ -14,24 +15,14 @@
 # add students
 4, ad, 7.9, 3
 5, ae, 7.1, 3
-5, be, 7.1, 3
-# delete student
-2
-3
-4
-4
-# modify student
-1, 8.1
-4, 6.1
 # add course
 4, 520, 81
 5, 560, 70
-5, 560, 72
+# modify student
+1, 8.1
+# delete student
+2
 # modify course
 5, 560, 76
-4, 520, 80
-8, 520, 80
 # delete course
 1, 520
-1, 620
-1, 78

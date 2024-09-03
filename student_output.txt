@@ -1,0 +1,10 @@
+ ID: 1 NAME: aa GPA: 8.100000 Subjects: 4
+ Subject ID 560	 Marks 39
+ Subject ID 450	 Marks 58
+ Subject ID 470	 Marks 49
+ Subject ID 0	 Marks 0
+ ID: 5 NAME: ae GPA: 7.100000 Subjects: 4
+ Subject ID 0	 Marks 0
+ Subject ID 0	 Marks 0
+ Subject ID 0	 Marks 0
+ Subject ID 560	 Marks 76

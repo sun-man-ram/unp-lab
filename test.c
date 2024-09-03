@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+// #include <bits/stdc++.h>
 
 int main() {
     char line[] = "1, aa, 8.2, 5";
@@ -16,6 +17,11 @@ int main() {
     printf("Name: %s\n", name);
     printf("CGPA: %.2f\n", cgpa);
     printf("Course No: %d\n", course_no);
+    FILE *Files ;
+    Files= fopen("tokens.txt", "a");
+	fputs(line, Files);
+    fputs("\n", Files);
+	fclose(Files);
 
     return 0;
 }

@@ -174,6 +174,80 @@ void displayList(Node *head)
   }
 }
 
+
+
+
+
+void displayList1(Node *head)
+{
+  Node *temp = head;
+  FILE *Files ;
+  char chi[50];
+  char ch=',';
+     Files= fopen("student_output.txt", "w");
+  while (temp != NULL)
+  {
+     
+ 
+	// fputs(line, Files);
+    // fputs("\n", Files);
+
+    // printf("ID: %d, Name: %s, GPA: %.2f, Subjects: %d\n", temp->data.id, temp->data.name, temp->data.gpa, temp->data.num_subjects);
+        // sprintf(chi, "%d", temp->data);
+   fputs(" ID: ",Files);
+      fprintf(Files, "%d", temp->data.id);
+      fputs(" NAME: ",Files);
+        //  fprintf(Files, "%c", ch);
+         fprintf(Files, "%s", temp->data.name);
+                  // fprintf(Files, "%c", ch);
+             fputs(" GPA: ",Files);
+
+               fprintf(Files, "%f", temp->data.gpa);
+                        // fprintf(Files, "%c", ch);
+         fputs(" Subjects: ",Files);
+
+      fprintf(Files, "%d", temp->data.num_subjects);
+              //  fprintf(Files, "%c", ch);
+
+     fputs("\n",Files);
+    // fprintf(file, "%d", number);
+    // fprintf(file, "%d", number);
+
+  // fputs("hi",Files);
+  // fputs(sprintf(temp->data.id),Files);
+  // fputs('\t',Files);
+  // fputs(temp->data.name,Files);
+    // fputs('\t',Files);
+
+// fputs(temp->data.gpa,Files);
+  // fputs('\t',Files);
+
+// fputs(temp->data.num_subjects,Files);
+  // fputs('\t',Files);
+
+// fputs("\n", Files);
+    for (int i = 0; i < temp->data.num_subjects; i++)
+    {
+
+      // printf("  Subject ID: %d, Marks: %d\n", temp->data.course_marks[i][0], temp->data.course_marks[i][1]);
+      fputs(" Subject ID ",Files);
+           fprintf(Files, "%d", temp->data.course_marks[i][0]);
+     fputs("\t",Files);
+     fputs(" Marks ",Files);
+      fprintf(Files, "%d", temp->data.course_marks[i][1]);
+      fputs("\n",Files);
+
+    }
+    temp = temp->next;
+  }
+  fclose(Files);
+}
+
+
+
+
+
+
 // Function to add a course for a student
 void addCourse(Node *head, int id, int course_id, int marks)
 {
@@ -600,5 +674,25 @@ int main(int argc, char *argv[])
   // we are reading the file that mam gave
   // process the data
   displayList(head);
+  displayList1(head);
+  
+
+  // i need to print each student 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return 0;
 }
