@@ -35,19 +35,80 @@ void add_student(const char *filename) {
 
 void add_course(const char *filename){
  printf("%s\n ",filename);
+  int fd2;
+    int fd = open("/tmp/fifo.1", O_WRONLY);
+
+    fd2 = open(filename, O_RDONLY);
+    char fcontent[100] = "";
+    int bytesRead;
+
+    // Read file content and write it to FIFO
+    while ((bytesRead = read(fd2, fcontent, sizeof(fcontent))) > 0) {
+        write(fd, fcontent, bytesRead);
+        memset(fcontent, 0, sizeof(fcontent)); // Clear buffer for next read
+    }
+
+    close(fd2);
+    close(fd);
 }
 
 void initialDatabase(const char *filename){
  printf("%s\n ",filename);
+  int fd2;
+    int fd = open("/tmp/fifo.1", O_WRONLY);
+
+    fd2 = open(filename, O_RDONLY);
+    char fcontent[100] = "";
+    int bytesRead;
+
+    // Read file content and write it to FIFO
+    while ((bytesRead = read(fd2, fcontent, sizeof(fcontent))) > 0) {
+        write(fd, fcontent, bytesRead);
+        memset(fcontent, 0, sizeof(fcontent)); // Clear buffer for next read
+    }
+
+    close(fd2);
+    close(fd);
 }
 void deleteCourse(const char *filename){
  printf("%s\n ",filename);
+  int fd2;
+    int fd = open("/tmp/fifo.1", O_WRONLY);
+
+    fd2 = open(filename, O_RDONLY);
+    char fcontent[100] = "";
+    int bytesRead;
+
+    // Read file content and write it to FIFO
+    while ((bytesRead = read(fd2, fcontent, sizeof(fcontent))) > 0) {
+        write(fd, fcontent, bytesRead);
+        memset(fcontent, 0, sizeof(fcontent)); // Clear buffer for next read
+    }
+
+    close(fd2);
+    close(fd);
 }
 void modifyCourse(const char *filename){
  printf("%s\n ",filename);
+  int fd2;
+    int fd = open("/tmp/fifo.1", O_WRONLY);
+
+    fd2 = open(filename, O_RDONLY);
+    char fcontent[100] = "";
+    int bytesRead;
+
+    // Read file content and write it to FIFO
+    while ((bytesRead = read(fd2, fcontent, sizeof(fcontent))) > 0) {
+        write(fd, fcontent, bytesRead);
+        memset(fcontent, 0, sizeof(fcontent)); // Clear buffer for next read
+    }
+
+    close(fd2);
+    close(fd);
 }
 void modifyStudent(const char *filename){
  printf("%s\n ",filename);
+ 
 }
 void deleteStudent(const char *filename){
  printf("%s\n ",filename);

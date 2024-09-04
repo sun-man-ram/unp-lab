@@ -5,6 +5,9 @@
 #include <sys/stat.h>
 #include <string.h>
 int main() {
+    while(1){
+
+    
     char s1[100] = "";
 
     mkfifo("/tmp/fifo.1", 0600);
@@ -20,5 +23,6 @@ int main() {
     }
 
     close(fd);
+    }
     return 0;
 }
